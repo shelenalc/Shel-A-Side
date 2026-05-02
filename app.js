@@ -1,19 +1,46 @@
 /**
- * SHEL-A SIDE – MAIN APP (GODMODE)
- * Mengelola keranjang, render menu, filter, checkout, WhatsApp order.
- * Disimpan terpisah dari HTML agar rapi.
+ * SHEL-A SIDE – MAIN JAVASCRIPT (GODMODE v2)
+ * Cart, Menu, Filter, Modal, Notifications, Checkout WA.
+ * Disimpan sebagai js/app.js
  */
 
-// ==================== CART STATE ====================
+// ==================== DATA MENU LENGKAP ====================
+const fullMenu = [
+    // Dimsum
+    { id: 1, name: 'Siomay Udang (5 pcs)', price: 18000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=5', desc: 'Siomay kulit tipis isi udang segar.' },
+    { id: 2, name: 'Hakau Udang (4 pcs)', price: 22000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=7', desc: 'Hakau bening dengan udang premium.' },
+    { id: 3, name: 'Lumpia Kulit Tahu', price: 15000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=8', desc: 'Lumpia renyah isi ayam & sayur.' },
+    { id: 4, name: 'Xiao Long Bao (3 pcs)', price: 26000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=20', desc: 'Dimsum kuah kaldu spesial.' },
+    // Chicken
+    { id: 5, name: 'Chicken Tenders (3 pcs)', price: 28000, category: 'chicken', image: 'https://picsum.photos/300/300?random=4', desc: 'Potongan dada ayam renyah.', sauce: true },
+    { id: 6, name: 'Chicken Popcorn', price: 25000, category: 'chicken', image: 'https://picsum.photos/300/300?random=9', desc: 'Popcorn ayam gurih.', sauce: true },
+    { id: 7, name: 'Spicy Chicken Wings', price: 30000, category: 'chicken', image: 'https://picsum.photos/300/300?random=10', desc: 'Sayap ayam pedas manis.' },
+    // Sides
+    { id: 8, name: 'Waffle Fries', price: 20000, category: 'sides', image: 'https://picsum.photos/300/300?random=11', desc: 'Kentang waffle gurih renyah.' },
+    { id: 9, name: 'Risol Mayo (3 pcs)', price: 16000, category: 'sides', image: 'https://picsum.photos/300/300?random=12', desc: 'Risol isi sayur + mayo.' },
+    { id: 10, name: 'French Fries Regular', price: 18000, category: 'sides', image: 'https://picsum.photos/300/300?random=21', desc: 'Kentang goreng klasik.' },
+    // Drinks
+    { id: 11, name: 'Es Teh Segar', price: 8000, category: 'drinks', image: 'https://picsum.photos/300/300?random=13', desc: 'Teh manis segar pelepas dahaga.' },
+    { id: 12, name: 'Lemonade', price: 12000, category: 'drinks', image: 'https://picsum.photos/300/300?random=14', desc: 'Lemonade homemade segar.' },
+    { id: 13, name: 'Kopi Susu', price: 15000, category: 'drinks', image: 'https://picsum.photos/300/300?random=22', desc: 'Kopi susu kekinian.' },
+    // Saus Ekstra
+    { id: 14, name: 'Saus Keju', price: 5000, category: 'sauce', image: 'https://picsum.photos/300/300?random=15', desc: 'Saus keju creamy homemade.' },
+    { id: 15, name: 'Saus Sambal', price: 3000, category: 'sauce', image: 'https://picsum.photos/300/300?random=16', desc: 'Sambal pedas spesial.' },
+    { id: 16, name: 'Saus BBQ', price: 4000, category: 'sauce', image: 'https://picsum.photos/300/300?random=17', desc: 'Saus BBQ smokey.' },
+];
+
+const sauceOptions = ['Ranch', 'BBQ', 'Sambal', 'Keju'];
+
+// ==================== STATE ====================
 let cart = [];
 
-// ==================== HELPER: FORMAT MATA UANG ====================
-const formatRupiah = (angka) => {
-    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka);
+// ==================== HELPER ====================
+const formatRupiah = (number) => {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
 };
 
-// ==================== CART FUNCTIONS ====================
-function loadCartFromStorage() {
+// ==================== CART LOGIC ====================
+function loadCart() {
     const saved = localStorage.getItem('shelAsideCart');
     if (saved) {
         try {
@@ -24,31 +51,60 @@ function loadCartFromStorage() {
     }
 }
 
-function saveCartToStorage() {
+function saveCart() {
     localStorage.setItem('shelAsideCart', JSON.stringify(cart));
 }
 
-function updateCartCount() {
-    const count = cart.reduce((total, item) => total + item.qty, 0);
-    document.getElementById('cartCount').textContent = count;
+function getCartTotal() {
+    return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 }
 
-function calculateTotal() {
-    return cart.reduce((total, item) => total + (item.price * item.qty), 0);
+function getCartCount() {
+    return cart.reduce((sum, item) => sum + item.qty, 0);
 }
 
-function updateTotalDisplay() {
-    document.getElementById('cartTotal').textContent = formatRupiah(calculateTotal());
-}
-
-// Render seluruh item di keranjang
-function renderCart() {
-    const cartItemsContainer = document.getElementById('cartItems');
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="cart-empty">Belum ada item. Yuk pilih menu favoritmu!</p>';
+function addToCart(id, name, price, image, sauce = '') {
+    const existing = cart.find(item => item.id === id && item.sauce === sauce);
+    if (existing) {
+        existing.qty += 1;
     } else {
-        cartItemsContainer.innerHTML = cart.map((item, index) => `
-            <div class="cart-item" data-index="${index}">
+        cart.push({ id, name, price, qty: 1, image, sauce });
+    }
+    saveCart();
+    renderCart();
+    updateCartCount();
+    showNotification(`${name} berhasil ditambahkan!`);
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+    updateCartCount();
+}
+
+function updateQty(index, delta) {
+    if (cart[index]) {
+        cart[index].qty += delta;
+        if (cart[index].qty < 1) {
+            removeFromCart(index);
+        } else {
+            saveCart();
+            renderCart();
+            updateCartCount();
+        }
+    }
+}
+
+// ==================== RENDER CART ====================
+function renderCart() {
+    const container = document.getElementById('cartItems');
+    if (!container) return;
+    if (cart.length === 0) {
+        container.innerHTML = '<p class="cart-empty" style="text-align:center;color:#999;margin-top:40px;">Keranjangmu kosong. Yuk pilih menu!</p>';
+    } else {
+        container.innerHTML = cart.map((item, index) => `
+            <div class="cart-item">
                 <div class="cart-item-img">
                     <img src="${item.image || 'https://picsum.photos/60/60?random=' + item.id}" alt="${item.name}">
                 </div>
@@ -65,215 +121,280 @@ function renderCart() {
             </div>
         `).join('');
     }
-    updateCartCount();
-    updateTotalDisplay();
-    saveCartToStorage();
+    document.getElementById('cartTotal').textContent = formatRupiah(getCartTotal());
 }
 
-// Tambah item ke cart
-function addToCart(id, name, price, image = '', sauce = '') {
-    const existingIndex = cart.findIndex(item => item.id === id && item.sauce === sauce);
-    if (existingIndex > -1) {
-        cart[existingIndex].qty += 1;
-    } else {
-        cart.push({ id, name, price, qty: 1, image, sauce });
-    }
-    renderCart();
-    // Animasi mini notifikasi (bisa diaktifkan nanti)
-    showNotification(`${name} ditambahkan!`);
+function updateCartCount() {
+    const countEl = document.getElementById('cartCount');
+    if (countEl) countEl.textContent = getCartCount();
 }
 
-// Hapus item
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    renderCart();
+// ==================== CART PANEL UI ====================
+const cartOffcanvas = document.getElementById('cartOffcanvas');
+const cartToggle = document.getElementById('cartToggle');
+const cartClose = cartOffcanvas?.querySelector('.btn-close-cart');
+const cartOverlay = cartOffcanvas?.querySelector('.cart-overlay');
+
+function openCart() {
+    cartOffcanvas?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+    cartOffcanvas?.classList.remove('open');
+    document.body.style.overflow = '';
 }
 
-// Update qty
-function updateQty(index, delta) {
-    if (cart[index]) {
-        cart[index].qty += delta;
-        if (cart[index].qty < 1) {
-            removeFromCart(index);
-        } else {
-            renderCart();
-        }
-    }
-}
+cartToggle?.addEventListener('click', openCart);
+cartClose?.addEventListener('click', closeCart);
+cartOverlay?.addEventListener('click', closeCart);
 
-// Notifikasi kecil (opsional)
-function showNotification(message) {
-    // Buat elemen notifikasi
+// Event delegation for cart items
+document.getElementById('cartItems')?.addEventListener('click', (e) => {
+    const target = e.target;
+    const index = parseInt(target.dataset.index);
+    if (target.dataset.action === 'increase') updateQty(index, 1);
+    else if (target.dataset.action === 'decrease') updateQty(index, -1);
+    else if (target.dataset.action === 'remove') removeFromCart(index);
+});
+
+// ==================== NOTIFICATION ====================
+function showNotification(msg) {
     const notif = document.createElement('div');
     notif.className = 'cart-notification';
-    notif.textContent = message;
+    notif.textContent = msg;
     document.body.appendChild(notif);
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         notif.classList.add('show');
-    }, 10);
+    });
     setTimeout(() => {
         notif.classList.remove('show');
-        setTimeout(() => notif.remove(), 300);
-    }, 2000);
+        setTimeout(() => notif.remove(), 400);
+    }, 2500);
 }
 
-// ==================== RENDER MENU ITEMS (DINAMIS) ====================
-// Untuk halaman menu lengkap, kita render dari data array
-const fullMenu = [
-    { id: 4, name: 'Chicken Tenders (3 pcs)', price: 28000, category: 'chicken', image: 'https://picsum.photos/300/300?random=4', badge: 'Pilih Saus' },
-    { id: 5, name: 'Siomay Udang (5 pcs)', price: 18000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=5' },
-    { id: 6, name: 'Hakau Udang (4 pcs)', price: 22000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=7' },
-    { id: 7, name: 'Lumpia Kulit Tahu', price: 15000, category: 'dimsum', image: 'https://picsum.photos/300/300?random=8' },
-    { id: 8, name: 'Chicken Popcorn', price: 25000, category: 'chicken', image: 'https://picsum.photos/300/300?random=9', badge: 'Saus Rekomendasi' },
-    { id: 9, name: 'Spicy Chicken Wings', price: 30000, category: 'chicken', image: 'https://picsum.photos/300/300?random=10' },
-    { id: 10, name: 'Waffle Fries', price: 20000, category: 'sides', image: 'https://picsum.photos/300/300?random=11' },
-    { id: 11, name: 'Risol Mayo', price: 16000, category: 'sides', image: 'https://picsum.photos/300/300?random=12' },
-    { id: 12, name: 'Es Teh Segar', price: 8000, category: 'drinks', image: 'https://picsum.photos/300/300?random=13' },
-    { id: 13, name: 'Lemonade', price: 12000, category: 'drinks', image: 'https://picsum.photos/300/300?random=14' },
-    { id: 14, name: 'Saus Keju', price: 5000, category: 'sauce', image: 'https://picsum.photos/300/300?random=15' },
-    { id: 15, name: 'Saus Sambal', price: 3000, category: 'sauce', image: 'https://picsum.photos/300/300?random=16' },
-];
-
-function renderMenuGrid(category = 'all') {
-    const grid = document.getElementById('menuGrid');
+// ==================== RENDER MENU ====================
+const menuGrid = document.getElementById('menuGrid');
+function renderMenu(category = 'all') {
+    if (!menuGrid) return;
     const filtered = category === 'all' ? fullMenu : fullMenu.filter(item => item.category === category);
-    grid.innerHTML = filtered.map(item => `
+    menuGrid.innerHTML = filtered.map(item => `
         <div class="menu-item" data-category="${item.category}">
             <div class="menu-item-img">
                 <img src="${item.image}" alt="${item.name}" loading="lazy">
-                ${item.badge ? `<span class="badge-sauce">${item.badge}</span>` : ''}
+                ${item.sauce ? '<span class="badge-select-sauce">Pilih Saus</span>' : ''}
             </div>
             <div class="menu-item-info">
                 <h3>${item.name}</h3>
-                <p>Deskripsi singkat produk ${item.name.toLowerCase()}.</p>
+                <p>${item.desc || ''}</p>
                 <div class="item-footer">
                     <span class="price">${formatRupiah(item.price)}</span>
-                    <button class="btn-add" data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-image="${item.image}">+ Add</button>
+                    <button class="btn btn-add-sm" 
+                        data-id="${item.id}" 
+                        data-name="${item.name}" 
+                        data-price="${item.price}" 
+                        data-image="${item.image}"
+                        data-sauce="${item.sauce || ''}">+ Add</button>
                 </div>
             </div>
         </div>
     `).join('');
-
-    // Re-attach event listener untuk tombol add di grid ini
-    attachAddToCartListeners();
+    attachAddListeners();
 }
 
-// ==================== EVENT LISTENER: TOMBOL ADD ====================
-function attachAddToCartListeners() {
-    document.querySelectorAll('.btn-add').forEach(btn => {
-        // Hindari double listener
-        btn.removeEventListener('click', handleAddClick);
-        btn.addEventListener('click', handleAddClick);
-    });
-}
-
+// ==================== ADD TO CART HANDLER ====================
 function handleAddClick(e) {
     const btn = e.currentTarget;
     const id = parseInt(btn.dataset.id);
     const name = btn.dataset.name;
     const price = parseInt(btn.dataset.price);
-    const image = btn.dataset.image || '';
-    addToCart(id, name, price, image);
+    const image = btn.dataset.image;
+    const hasSauce = btn.dataset.sauce === 'true';
+
+    if (hasSauce) {
+        // Tampilkan prompt pilih saus sebelum add
+        showSaucePrompt(id, name, price, image, btn);
+    } else {
+        addToCart(id, name, price, image);
+    }
 }
 
-// ==================== CART PANEL & INTERACTIONS ====================
-const cartToggle = document.getElementById('cartToggle');
-const cartOffcanvas = document.getElementById('cartOffcanvas');
-const cartClose = document.getElementById('cartClose');
-const cartOverlay = document.getElementById('cartOverlay');
+function showSaucePrompt(id, name, price, image, triggerBtn) {
+    // Buat dialog custom
+    const overlay = document.createElement('div');
+    overlay.className = 'sauce-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:5000;display:flex;align-items:center;justify-content:center;';
+    
+    const dialog = document.createElement('div');
+    dialog.className = 'sauce-dialog';
+    dialog.style.cssText = 'background:white;padding:32px;border-radius:24px;max-width:90%;width:400px;box-shadow:0 20px 40px rgba(0,0,0,0.2);';
+    dialog.innerHTML = `
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin-bottom:16px;">Pilih Saus</h3>
+        <p style="margin-bottom:20px;">Pilih saus untuk <strong>${name}</strong>:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+            ${sauceOptions.map(s => `
+                <label style="flex:1;min-width:100px;border:2px solid #ddd;border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:0.2s;" 
+                       onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='#ddd'">
+                    <input type="radio" name="sauce" value="${s}" style="display:none;">
+                    <span>${s}</span>
+                </label>
+            `).join('')}
+        </div>
+        <button id="confirmSauce" class="btn btn-primary btn-block">Tambahkan ke Keranjang</button>
+        <button id="cancelSauce" style="margin-top:12px;width:100%;padding:12px;border-radius:50px;border:1px solid #ddd;background:none;">Batal</button>
+    `;
+    
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+    
+    const radioButtons = dialog.querySelectorAll('input[name="sauce"]');
+    let selectedSauce = '';
+    
+    radioButtons.forEach(rb => {
+        rb.addEventListener('change', (e) => {
+            selectedSauce = e.target.value;
+            // highlight label
+            dialog.querySelectorAll('label').forEach(l => l.style.borderColor = '#ddd');
+            e.target.parentElement.style.borderColor = 'var(--red)';
+        });
+    });
+    
+    dialog.querySelector('#cancelSauce').addEventListener('click', () => {
+        document.body.removeChild(overlay);
+    });
+    
+    dialog.querySelector('#confirmSauce').addEventListener('click', () => {
+        if (!selectedSauce) {
+            alert('Silakan pilih saus dulu!');
+            return;
+        }
+        addToCart(id, name, price, image, selectedSauce);
+        document.body.removeChild(overlay);
+    });
+    
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) document.body.removeChild(overlay);
+    });
+}
 
-function openCart() {
-    cartOffcanvas.classList.add('open');
+function attachAddListeners() {
+    document.querySelectorAll('.btn-add, .btn-add-sm').forEach(btn => {
+        // prevent multiple listeners
+        btn.removeEventListener('click', handleAddClick);
+        btn.addEventListener('click', handleAddClick);
+    });
+}
+
+// ==================== TAB FILTER ====================
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelector('.tab.active')?.classList.remove('active');
+        tab.classList.add('active');
+        const category = tab.dataset.filter;
+        renderMenu(category);
+    });
+});
+
+// ==================== QUICK VIEW / MODAL ====================
+const productModal = document.getElementById('productModal');
+const modalContent = document.getElementById('modalContent');
+
+function openModal(product) {
+    if (!productModal || !modalContent) return;
+    modalContent.innerHTML = `
+        <div style="display:flex; gap:24px; flex-wrap:wrap;">
+            <img src="${product.image}" alt="${product.name}" style="width:100%;max-width:300px;border-radius:16px;object-fit:cover;">
+            <div style="flex:1;">
+                <h2 style="font-size:36px;">${product.name}</h2>
+                <p>${product.desc || ''}</p>
+                <p style="font-weight:700;font-size:24px;color:var(--red);">${formatRupiah(product.price)}</p>
+                <button class="btn btn-primary btn-block modal-add-btn" 
+                    data-id="${product.id}" 
+                    data-name="${product.name}" 
+                    data-price="${product.price}" 
+                    data-image="${product.image}"
+                    data-sauce="${product.sauce || ''}">+ Tambah ke Keranjang</button>
+            </div>
+        </div>
+    `;
+    productModal.classList.add('open');
     document.body.style.overflow = 'hidden';
+    // attach listener ke tombol di modal
+    document.querySelector('.modal-add-btn')?.addEventListener('click', handleAddClick);
 }
-function closeCart() {
-    cartOffcanvas.classList.remove('open');
+
+function closeModal() {
+    productModal?.classList.remove('open');
     document.body.style.overflow = '';
 }
 
-cartToggle.addEventListener('click', openCart);
-cartClose.addEventListener('click', closeCart);
-cartOverlay.addEventListener('click', closeCart);
+productModal?.querySelector('.modal-close')?.addEventListener('click', closeModal);
+productModal?.querySelector('.modal-overlay')?.addEventListener('click', closeModal);
 
-// Delegasi event untuk tombol dalam cart (qty, remove)
-document.getElementById('cartItems').addEventListener('click', (e) => {
-    const target = e.target;
-    const index = target.dataset.index;
-    if (target.dataset.action === 'increase') {
-        updateQty(parseInt(index), 1);
-    } else if (target.dataset.action === 'decrease') {
-        updateQty(parseInt(index), -1);
-    } else if (target.dataset.action === 'remove') {
-        removeFromCart(parseInt(index));
+// Attach quick view buttons (dari btn-quick-view di card)
+document.addEventListener('click', (e) => {
+    const quickBtn = e.target.closest('.btn-quick-view');
+    if (quickBtn) {
+        e.preventDefault();
+        const card = quickBtn.closest('.product-card');
+        if (card) {
+            const id = parseInt(card.dataset.productId);
+            // cari produk dari signature atau menu
+            // Untuk signature kita bisa ambil dari data attribute atau fullMenu
+            const product = fullMenu.find(p => p.id === id);
+            if (product) openModal(product);
+        }
     }
+    // Tambahan: tombol "Lihat Detail" di signature bisa pakai btn-quick-view juga
 });
 
-// ==================== TAB FILTER ====================
-const tabBtns = document.querySelectorAll('.tab-btn');
-tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelector('.tab-btn.active')?.classList.remove('active');
-        btn.classList.add('active');
-        const category = btn.dataset.category;
-        renderMenuGrid(category);
-    });
-});
-
-// ==================== CHECKOUT / WHATSAPP ORDER ====================
-document.getElementById('checkoutBtn').addEventListener('click', () => {
+// ==================== CHECKOUT WHATSAPP ====================
+function generateWAOrder() {
     if (cart.length === 0) {
-        alert('Keranjang masih kosong, bro!');
+        alert('Keranjang masih kosong!');
         return;
     }
-    // Bisa arahkan ke halaman checkout (jika ada backend), sementara kita pakai WA saja
+    const name = prompt('Masukkan nama kamu:') || 'Tanpa Nama';
+    const note = prompt('Catatan tambahan (opsional):') || '';
+    let message = `*Pesanan dari ${name}*%0A%0A`;
+    cart.forEach((item, i) => {
+        message += `${i+1}. ${item.name} x${item.qty} - ${formatRupiah(item.price * item.qty)}%0A`;
+        if (item.sauce) message += `   ➕ Saus: ${item.sauce}%0A`;
+    });
+    message += `%0A*Total: ${formatRupiah(getCartTotal())}*%0A`;
+    if (note) message += `%0ACatatan: ${note}%0A`;
+    message += `%0ATerima kasih!`;
+
+    const waNumber = '62812xxxxxx'; // GANTI NOMOR ASLI
+    const url = `https://wa.me/${waNumber}?text=${message}`;
+    window.open(url, '_blank');
+    closeCart();
+}
+
+document.getElementById('waOrderBtn')?.addEventListener('click', generateWAOrder);
+document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+    // Sementara arahkan ke WA juga, nanti bisa diganti halaman checkout
+    generateWAOrder();
+});
+document.getElementById('directWaBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
     generateWAOrder();
 });
 
-document.getElementById('waOrderBtn').addEventListener('click', generateWAOrder);
-
-function generateWAOrder() {
-    if (cart.length === 0) {
-        alert('Keranjang kosong, nggak bisa pesan.');
-        return;
-    }
-    const nama = prompt('Nama kamu:') || 'Tanpa Nama';
-    const meja = prompt('Nomor meja (untuk dine-in) atau kosongkan untuk takeaway:') || 'Takeaway';
-    let pesan = `Halo Shel-A Side! Saya mau pesan:%0A%0A`;
-    cart.forEach((item, idx) => {
-        pesan += `${idx+1}. ${item.name} x${item.qty} - ${formatRupiah(item.price * item.qty)}%0A`;
-    });
-    pesan += `%0ATotal: ${formatRupiah(calculateTotal())}%0A`;
-    pesan += `Nama: ${nama}%0A`;
-    pesan += `Meja/Tipe: ${meja}%0A`;
-    pesan += `%0AMohon dikonfirmasi. Terima kasih!`;
-
-    const waNumber = '62812xxxxxx'; // GANTI dengan nomor WhatsApp bisnis lo
-    const url = `https://wa.me/${waNumber}?text=${pesan}`;
-    window.open(url, '_blank');
-    closeCart(); // tutup cart setelah pesan
-}
-
-// ==================== MOBILE NAV TOGGLE ====================
+// ==================== MOBILE NAV ====================
 const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
-menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    // animasi hamburger
-    menuToggle.classList.toggle('open');
+const primaryNav = document.querySelector('.primary-nav');
+menuToggle?.addEventListener('click', () => {
+    primaryNav?.classList.toggle('active');
+    const expanded = primaryNav?.classList.contains('active');
+    menuToggle.setAttribute('aria-expanded', expanded);
 });
 
-// ==================== INITIALIZATION ====================
+// ==================== INIT ====================
 function init() {
-    loadCartFromStorage();
+    loadCart();
     renderCart();
-    // Render menu awal (semua)
-    renderMenuGrid('all');
-    // Update cart count awal
     updateCartCount();
-    updateTotalDisplay();
-    // Tambahkan event add untuk tombol yang ada di signature (hardcode)
-    attachAddToCartListeners();
+    renderMenu('all');
 }
 
-// Jalankan saat DOM siap
 document.addEventListener('DOMContentLoaded', init);
