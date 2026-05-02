@@ -1,103 +1,205 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" dir="ltr">
 <head>
+    <!-- ==================== META & SEO ==================== -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shel-A Side - Dimsum & Crispy Chicken dengan saus signature ala Chick-fil-A. Pesan online simpel & cepat.">
-    <title>Shel-A Side | Dimsum & Crispy Chicken</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Primary Meta Tags -->
+    <title>Shel-A Side | Dimsum & Crispy Chicken Premium dengan Saus Legendaris</title>
+    <meta name="title" content="Shel-A Side | Dimsum & Crispy Chicken dengan Saus Chick-fil-A Style">
+    <meta name="description" content="Nikmati Dimsum, Risol, Chicken Crispy, French Fries, dan saus signature ala Shel-A Side. Pesan online simpel & cepat. Dip, Crunch, Repeat.">
+    <meta name="keywords" content="dimsum, chicken crispy, risol, french fries, saus, chick fil a, makanan enak, pesan online, Jakarta">
+    <meta name="author" content="Shel-A Side">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shelaside.vercel.app/">
+    <meta property="og:title" content="Shel-A Side | Dimsum & Crispy Chicken Premium">
+    <meta property="og:description" content="Dip, Crunch, Repeat. Dimsum & Crispy Chicken dengan saus legendaris.">
+    <meta property="og:image" content="https://picsum.photos/1200/630?random=og">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Shel-A Side">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://shelaside.vercel.app/">
+    <meta name="twitter:title" content="Shel-A Side | Dimsum & Crispy Chicken Premium">
+    <meta name="twitter:description" content="Dip, Crunch, Repeat. Dimsum & Crispy Chicken dengan saus legendaris.">
+    <meta name="twitter:image" content="https://picsum.photos/1200/630?random=twitter">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://shelaside.vercel.app/">
+    
+    <!-- Font Awesome 6 (Professional Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Google Fonts: Bebas Neue + Poppins -->
+    <!-- Google Fonts: Bebas Neue + Poppins + Inter (untuk UI) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Stylesheet utama (akan kita buat nanti di CSS) -->
+    <!-- Main Stylesheet (CSS super lengkap nanti) -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Favicon opsional (nanti bisa ganti logo) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>🥟</text></svg>">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>🥟</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>🥟</text></svg>">
+    <link rel="mask-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>🥟</text></svg>" color="#D72638">
+    <meta name="theme-color" content="#2D2D2D">
 </head>
 <body>
-    <!-- ==================== NAVIGASI ==================== -->
-    <header class="navbar">
+    <!-- ==================== SKIP LINK (A11Y) ==================== -->
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <!-- ==================== HEADER / NAVIGASI UTAMA ==================== -->
+    <header class="site-header" id="siteHeader">
         <div class="container nav-container">
-            <a href="#" class="logo">
-                <span class="logo-shel">Shel-A</span><span class="logo-side">Side</span>
+            <!-- Logo -->
+            <a href="#" class="brand" aria-label="Shel-A Side Home">
+                <span class="brand-primary">Shel-A</span>
+                <span class="brand-secondary">Side</span>
             </a>
-            <nav class="nav-menu" id="navMenu">
-                <a href="#home" class="nav-link active">Beranda</a>
-                <a href="#menu" class="nav-link">Menu</a>
-                <a href="#about" class="nav-link">Tentang</a>
-                <a href="#contact" class="nav-link">Kontak</a>
+
+            <!-- Navigasi Desktop -->
+            <nav class="primary-nav" aria-label="Menu utama">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link active">Beranda</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#menu" class="nav-link">Menu <i class="fas fa-chevron-down fa-xs"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-inner">
+                                <div class="mega-col">
+                                    <h4>Kategori</h4>
+                                    <a href="#category-dimsum">Dimsum</a>
+                                    <a href="#category-chicken">Chicken Crispy</a>
+                                    <a href="#category-sides">Sides & Fries</a>
+                                    <a href="#category-drinks">Minuman</a>
+                                    <a href="#category-sauce">Saus Ekstra</a>
+                                </div>
+                                <div class="mega-col">
+                                    <h4>Best Seller</h4>
+                                    <a href="#product-1">Shel-A Chicken Dip</a>
+                                    <a href="#product-2">Dimsum Platter</a>
+                                    <a href="#product-10">Waffle Fries Duo</a>
+                                </div>
+                                <div class="mega-col mega-promo">
+                                    <img src="https://picsum.photos/300/200?random=promo" alt="Promo Spesial" loading="lazy">
+                                    <span>Promo Bulan Ini 🎉</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#about" class="nav-link">Cerita Kami</a></li>
+                    <li><a href="#contact" class="nav-link">Kontak</a></li>
+                </ul>
             </nav>
-            <button class="cart-toggle" id="cartToggle" aria-label="Buka keranjang">
-                <span class="cart-icon">🛒</span>
-                <span class="cart-count badge" id="cartCount">0</span>
-            </button>
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
+
+            <!-- Action Kanan -->
+            <div class="nav-actions">
+                <button class="btn-icon cart-toggle" id="cartToggle" aria-label="Keranjang belanja">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cartCount">0</span>
+                </button>
+                <button class="btn-icon menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">
+                    <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main>
-        <!-- ==================== HERO SECTION ==================== -->
+    <!-- ==================== KONTEN UTAMA ==================== -->
+    <main id="main-content">
+        <!-- ==================== HERO SECTION (FULLSCREEN VIDEO) ==================== -->
         <section id="home" class="hero">
-            <div class="hero-overlay">
-                <div class="container hero-content">
-                    <h1 class="hero-title">Dip, Crunch, Repeat.</h1>
-                    <p class="hero-subtitle">Dimsum &amp; Crispy Chicken ala Shel-A Side – hadir dengan saus legendaris.</p>
-                    <a href="#menu" class="btn btn-primary">Pesan Sekarang</a>
+            <div class="hero-bg">
+                <!-- Video background (placeholder pakai gambar dulu) -->
+                <img src="https://picsum.photos/1920/1080?random=hero" alt="Shel-A Side Hero" class="hero-media">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content container">
+                <h1 class="hero-title">Dip, Crunch, <span class="text-accent">Repeat.</span></h1>
+                <p class="hero-tagline">Dimsum &amp; Crispy Chicken ala Shel-A Side – hadir dengan saus legendaris yang bikin nagih.</p>
+                <div class="hero-cta">
+                    <a href="#menu" class="btn btn-primary btn-lg">Lihat Menu <i class="fas fa-utensils"></i></a>
+                    <a href="#order" class="btn btn-outline-light btn-lg">Pesan Langsung <i class="fas fa-arrow-right"></i></a>
                 </div>
+                <div class="hero-features">
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> Bahan Segar</div>
+                    <div class="feature-item"><i class="fas fa-motorcycle"></i> Pesan Cepat</div>
+                    <div class="feature-item"><i class="fas fa-sauce"></i> Saus Rumahan</div>
+                </div>
+            </div>
+            <div class="hero-scroll-indicator">
+                <span>Scroll</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </section>
 
         <!-- ==================== SIGNATURE MENU ==================== -->
-        <section id="signature" class="section-padding bg-cream">
+        <section id="signature" class="section signature-section">
             <div class="container">
-                <h2 class="section-title">Signature Menu</h2>
+                <header class="section-header text-center">
+                    <h2 class="section-title">Signature <span class="text-accent">Menu</span></h2>
+                    <p class="section-subtitle">Pilihan terbaik yang wajib kamu coba. Dibuat dengan bahan premium dan saus spesial.</p>
+                </header>
                 <div class="signature-grid">
-                    <!-- Card 1: Shel-A Chicken Dip -->
-                    <article class="menu-card">
-                        <div class="card-img">
-                            <img src="https://picsum.photos/400/300?random=1" alt="Shel-A Chicken Dip" loading="lazy">
+                    <!-- Card 1: Shel-A Chicken Dip (bisa pilih saus) -->
+                    <article class="product-card" data-product-id="1">
+                        <div class="product-img">
+                            <img src="https://picsum.photos/600/400?random=1" alt="Shel-A Chicken Dip" loading="lazy">
+                            <div class="product-badge">Best Seller</div>
+                            <button class="btn-quick-view" aria-label="Lihat detail" data-modal="productModal" data-product="1">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
                         </div>
-                        <div class="card-body">
-                            <h3 class="card-title">Shel-A Chicken Dip</h3>
-                            <p class="card-desc">Ayam dada renyah disajikan dengan saus signature pilihan.</p>
-                            <div class="card-footer">
-                                <span class="price">Rp 32.000</span>
-                                <button class="btn-add" data-id="1" data-name="Shel-A Chicken Dip" data-price="32000">+ Add</button>
+                        <div class="product-info">
+                            <h3 class="product-name">Shel-A Chicken Dip</h3>
+                            <p class="product-desc">Dada ayam renyah dengan balutan tepung rahasia, disajikan bersama pilihan saus signature.</p>
+                            <div class="product-footer">
+                                <span class="product-price">Rp 32.000</span>
+                                <button class="btn btn-add" 
+                                        data-id="1" 
+                                        data-name="Shel-A Chicken Dip" 
+                                        data-price="32000" 
+                                        data-image="https://picsum.photos/600/400?random=1"
+                                        data-sauce-select="true"
+                                        aria-label="Tambah ke keranjang">
+                                    + Add <i class="fas fa-shopping-bag"></i>
+                                </button>
                             </div>
                         </div>
                     </article>
-
                     <!-- Card 2: Dimsum Platter -->
-                    <article class="menu-card">
-                        <div class="card-img">
-                            <img src="https://picsum.photos/400/300?random=2" alt="Dimsum Platter" loading="lazy">
+                    <article class="product-card" data-product-id="2">
+                        <div class="product-img">
+                            <img src="https://picsum.photos/600/400?random=2" alt="Dimsum Platter" loading="lazy">
+                            <div class="product-badge">New</div>
                         </div>
-                        <div class="card-body">
-                            <h3 class="card-title">Dimsum Platter</h3>
-                            <p class="card-desc">Siomay, hakau, lumpia kulit tahu, kukus dalam bambu.</p>
-                            <div class="card-footer">
-                                <span class="price">Rp 38.000</span>
-                                <button class="btn-add" data-id="2" data-name="Dimsum Platter" data-price="38000">+ Add</button>
+                        <div class="product-info">
+                            <h3 class="product-name">Dimsum Platter</h3>
+                            <p class="product-desc">Kombinasi siomay, hakau, lumpia kulit tahu, dikukus dalam bambu tradisional.</p>
+                            <div class="product-footer">
+                                <span class="product-price">Rp 38.000</span>
+                                <button class="btn btn-add" data-id="2" data-name="Dimsum Platter" data-price="38000" data-image="https://picsum.photos/600/400?random=2" aria-label="Tambah ke keranjang">+ Add <i class="fas fa-shopping-bag"></i></button>
                             </div>
                         </div>
                     </article>
-
                     <!-- Card 3: Waffle Fries & Sauce Duo -->
-                    <article class="menu-card">
-                        <div class="card-img">
-                            <img src="https://picsum.photos/400/300?random=3" alt="Waffle Fries & Sauce Duo" loading="lazy">
+                    <article class="product-card" data-product-id="3">
+                        <div class="product-img">
+                            <img src="https://picsum.photos/600/400?random=3" alt="Waffle Fries & Sauce Duo" loading="lazy">
                         </div>
-                        <div class="card-body">
-                            <h3 class="card-title">Waffle Fries & Sauce Duo</h3>
-                            <p class="card-desc">Kentang waffle gurih + 2 saus celup favoritmu.</p>
-                            <div class="card-footer">
-                                <span class="price">Rp 22.000</span>
-                                <button class="btn-add" data-id="3" data-name="Waffle Fries & Sauce Duo" data-price="22000">+ Add</button>
+                        <div class="product-info">
+                            <h3 class="product-name">Waffle Fries & Sauce Duo</h3>
+                            <p class="product-desc">Kentang waffle gurih + 2 pilihan saus celup favoritmu.</p>
+                            <div class="product-footer">
+                                <span class="product-price">Rp 22.000</span>
+                                <button class="btn btn-add" data-id="3" data-name="Waffle Fries & Sauce Duo" data-price="22000" data-image="https://picsum.photos/600/400?random=3" data-sauce-select="true" aria-label="Tambah ke keranjang">+ Add <i class="fas fa-shopping-bag"></i></button>
                             </div>
                         </div>
                     </article>
@@ -105,122 +207,168 @@
             </div>
         </section>
 
-        <!-- ==================== FULL MENU SHOWCASE ==================== -->
-        <section id="menu" class="section-padding bg-white">
+        <!-- ==================== FULL MENU WITH TABS ==================== -->
+        <section id="menu" class="section full-menu-section bg-light">
             <div class="container">
-                <h2 class="section-title">Jelajahi Menu Kami</h2>
+                <header class="section-header text-center">
+                    <h2 class="section-title">Jelajahi <span class="text-accent">Menu</span></h2>
+                    <p class="section-subtitle">Dari dimsum tradisional hingga chicken crispy kekinian, semua ada di sini.</p>
+                </header>
                 
-                <!-- Tab Filter Kategori -->
-                <div class="tab-filters">
-                    <button class="tab-btn active" data-category="all">Semua</button>
-                    <button class="tab-btn" data-category="dimsum">🥟 Dimsum</button>
-                    <button class="tab-btn" data-category="chicken">🍗 Chicken Crispy</button>
-                    <button class="tab-btn" data-category="sides">🍟 Sides & Fries</button>
-                    <button class="tab-btn" data-category="drinks">🥤 Minuman</button>
-                    <button class="tab-btn" data-category="sauce">🫙 Saus Ekstra</button>
+                <!-- Filter Tabs -->
+                <div class="menu-tabs" role="tablist" aria-label="Kategori menu">
+                    <button role="tab" class="tab active" data-filter="all" aria-selected="true">Semua</button>
+                    <button role="tab" class="tab" data-filter="dimsum" aria-selected="false">🥟 Dimsum</button>
+                    <button role="tab" class="tab" data-filter="chicken" aria-selected="false">🍗 Chicken</button>
+                    <button role="tab" class="tab" data-filter="sides" aria-selected="false">🍟 Sides</button>
+                    <button role="tab" class="tab" data-filter="drinks" aria-selected="false">🥤 Minuman</button>
+                    <button role="tab" class="tab" data-filter="sauce" aria-selected="false">🫙 Saus</button>
                 </div>
 
-                <!-- Grid Produk (nanti difilter JS) -->
-                <div class="menu-grid" id="menuGrid">
-                    <!-- Item-item akan di-render oleh JS atau bisa juga hardcode sebagai fallback -->
-                    <!-- Contoh hardcode satu item agar halaman tidak kosong jika JS mati -->
+                <!-- Dynamic grid rendered by JS (fallback statis) -->
+                <div class="menu-grid" id="menuGrid" aria-live="polite">
+                    <!-- Fallback items jika JS mati -->
                     <div class="menu-item" data-category="chicken">
                         <div class="menu-item-img">
                             <img src="https://picsum.photos/300/300?random=4" alt="Chicken Tenders" loading="lazy">
-                            <span class="badge-sauce">Pilih Saus</span>
+                            <span class="badge-select-sauce">Pilih Saus</span>
                         </div>
                         <div class="menu-item-info">
                             <h3>Chicken Tenders (3 pcs)</h3>
-                            <p>Crispy luar, juicy dalam. Cocok dicelup saus apapun.</p>
+                            <p>Potongan dada ayam renyah, juicy di dalam.</p>
                             <div class="item-footer">
                                 <span class="price">Rp 28.000</span>
-                                <button class="btn-add" data-id="4" data-name="Chicken Tenders" data-price="28000">+ Add</button>
+                                <button class="btn btn-add-sm" data-id="4" data-name="Chicken Tenders" data-price="28000" data-image="https://picsum.photos/300/300?random=4" data-sauce-select="true">+ Add</button>
                             </div>
                         </div>
                     </div>
-                    <div class="menu-item" data-category="dimsum">
-                        <div class="menu-item-img">
-                            <img src="https://picsum.photos/300/300?random=5" alt="Siomay Udang" loading="lazy">
-                        </div>
-                        <div class="menu-item-info">
-                            <h3>Siomay Udang (5 pcs)</h3>
-                            <p>Siomay kulit tipis isi udang segar + saus sambal.</p>
-                            <div class="item-footer">
-                                <span class="price">Rp 18.000</span>
-                                <button class="btn-add" data-id="5" data-name="Siomay Udang" data-price="18000">+ Add</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Tambahkan beberapa lagi nanti, atau biarkan JS yang generate banyak item -->
+                    <!-- Sisa item akan di-generate JS, tapi kita sertakan beberapa agar tidak kosong -->
+                </div>
+                <!-- Tombol muat lebih (opsional) -->
+                <div class="text-center load-more-container" style="display:none;">
+                    <button id="loadMoreBtn" class="btn btn-outline-dark">Muat Lebih Banyak <i class="fas fa-spinner"></i></button>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== ABOUT / CERITA SINGKAT ==================== -->
-        <section id="about" class="section-padding bg-cream">
-            <div class="container flex-about">
-                <div class="about-text">
-                    <h2 class="section-title">Cerita Kami</h2>
-                    <p>Berawal dari kegemaran memadukan dimsum tradisional dengan saus-saus ala restoran cepat saji, lahirlah <strong>Shel-A Side</strong>. Setiap gigitan ayam crispy dan dimsum kami dibuat segar, disajikan cepat, dan tentunya dengan saus pilihan yang bikin nagih. Sisi lain dari makanan biasa.</p>
+        <!-- ==================== TENTANG KAMI ==================== -->
+        <section id="about" class="section about-section">
+            <div class="container about-flex">
+                <div class="about-content">
+                    <h2 class="section-title">Cerita <span class="text-accent">Kami</span></h2>
+                    <p class="lead">Dari kecintaan terhadap dimsum tradisional dan saus ala fast food, lahirlah Shel-A Side.</p>
+                    <p>Kami menggabungkan teknik memasak modern dengan resep warisan, menciptakan pengalaman makan yang <strong>familiar tapi mengejutkan</strong>. Setiap menu dibuat segar setiap hari, dengan bahan pilihan, dan tentu saja: saus legendaris yang dibuat dari nol.</p>
+                    <div class="about-stats">
+                        <div class="stat"><span>50+</span> Menu</div>
+                        <div class="stat"><span>10</span> Saus</div>
+                        <div class="stat"><span>100%</span> Halal</div>
+                    </div>
                 </div>
-                <div class="about-img">
-                    <img src="https://picsum.photos/500/400?random=6" alt="Suasana Shel-A Side" loading="lazy">
+                <div class="about-media">
+                    <img src="https://picsum.photos/600/500?random=about" alt="Tim Shel-A Side" loading="lazy">
                 </div>
+            </div>
+        </section>
+
+        <!-- ==================== CTA ORDER ==================== -->
+        <section id="order" class="section cta-section text-center bg-dark">
+            <div class="container">
+                <h2 class="cta-title">Siap Pesan Sekarang?</h2>
+                <p>Pilih menu favoritmu dan langsung checkout. Bisa makan di tempat atau takeaway.</p>
+                <a href="#menu" class="btn btn-primary btn-lg">Mulai Pilih Menu</a>
+                <span class="cta-or">atau</span>
+                <a href="#" id="directWaBtn" class="btn btn-wa btn-lg"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</a>
             </div>
         </section>
     </main>
 
     <!-- ==================== CART OFFCANVAS ==================== -->
-    <aside class="cart-offcanvas" id="cartOffcanvas">
-        <div class="cart-overlay" id="cartOverlay"></div>
-        <div class="cart-panel">
+    <aside class="cart-offcanvas" id="cartOffcanvas" aria-hidden="true">
+        <div class="cart-overlay"></div>
+        <div class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
             <div class="cart-header">
-                <h2 class="cart-title">Keranjangmu</h2>
-                <button class="cart-close" id="cartClose">&times;</button>
+                <h2 id="cartTitle" class="cart-title">Keranjangmu</h2>
+                <button class="btn-close-cart" aria-label="Tutup keranjang">&times;</button>
             </div>
-            <div class="cart-items" id="cartItems">
-                <!-- Item cart dinamis via JS -->
-                <p class="cart-empty">Belum ada item. Yuk pilih menu favoritmu!</p>
+            
+            <!-- Body: daftar item -->
+            <div class="cart-body" id="cartItems">
+                <!-- Render dari JS -->
             </div>
+
+            <!-- Catatan / pilih saus mungkin muncul di sini -->
+            <div class="cart-sauce-prompt" id="cartSaucePrompt" style="display:none;">
+                <p>Pilih saus untuk <strong id="sauceItemName"></strong>:</p>
+                <select id="sauceSelect" class="form-select">
+                    <option value="">Tanpa Saus Ekstra</option>
+                    <option value="Ranch">Ranch</option>
+                    <option value="BBQ">BBQ</option>
+                    <option value="Sambal">Sambal</option>
+                    <option value="Keju">Keju</option>
+                </select>
+            </div>
+
+            <!-- Footer: total + checkout -->
             <div class="cart-footer">
                 <div class="cart-total">
                     <span>Total</span>
                     <span id="cartTotal">Rp 0</span>
                 </div>
                 <button class="btn btn-primary btn-block" id="checkoutBtn">Lanjut Checkout</button>
-                <button class="btn btn-wa btn-block" id="waOrderBtn">Pesan via WhatsApp</button>
+                <button class="btn btn-outline-dark btn-block btn-wa-cart" id="waOrderBtn"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</button>
             </div>
         </div>
     </aside>
 
+    <!-- ==================== MODAL PRODUK DETAIL ==================== -->
+    <div class="modal" id="productModal" aria-hidden="true">
+        <div class="modal-overlay"></div>
+        <div class="modal-dialog">
+            <button class="modal-close" aria-label="Tutup">&times;</button>
+            <div class="modal-content" id="modalContent">
+                <!-- Diisi JS: gambar, deskripsi, pilihan saus, tombol add -->
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== FOOTER ==================== -->
-    <footer class="footer">
+    <footer class="site-footer">
         <div class="container footer-grid">
-            <div class="footer-brand">
-                <span class="logo logo-footer">Shel-A<span>Side</span></span>
-                <p>Dip, Crunch, Repeat. Nikmati dimsum dan crispy chicken dengan saus pilihan.</p>
+            <div class="footer-col">
+                <h4>Tentang Shel-A Side</h4>
+                <p>Makanan berkualitas dengan cita rasa unik. Kombinasi dimsum & crispy chicken yang belum pernah ada sebelumnya.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
             </div>
-            <div class="footer-links">
+            <div class="footer-col">
                 <h4>Menu</h4>
-                <a href="#dimsum">Dimsum</a>
-                <a href="#chicken">Chicken Crispy</a>
-                <a href="#sides">Sides &amp; Fries</a>
-                <a href="#drinks">Minuman</a>
+                <ul>
+                    <li><a href="#category-dimsum">Dimsum</a></li>
+                    <li><a href="#category-chicken">Chicken Crispy</a></li>
+                    <li><a href="#category-sides">Sides & Fries</a></li>
+                    <li><a href="#category-drinks">Minuman</a></li>
+                    <li><a href="#category-sauce">Saus Ekstra</a></li>
+                </ul>
             </div>
-            <div class="footer-contact">
+            <div class="footer-col">
                 <h4>Kontak</h4>
-                <p>📱 <a href="https://wa.me/62812xxxxxx">+62 812-xxxx-xxxx</a></p>
-                <p>📍 Jl. Rasa Enak No. 10, Jakarta</p>
-                <p>🕒 Setiap hari, 10.00 - 22.00</p>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Jl. Rasa Enak No. 10, Jakarta</li>
+                    <li><i class="fas fa-phone-alt"></i> <a href="tel:+62812xxxxxx">+62 812-xxxx-xxxx</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:hello@shelaside.id">hello@shelaside.id</a></li>
+                    <li><i class="fas fa-clock"></i> 10:00 - 22:00 WIB</li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Shel-A Side. Made with 🔥.</p>
+            <p>&copy; 2025 Shel-A Side. All rights reserved. Made with ❤️</p>
         </div>
     </footer>
 
     <!-- ==================== SCRIPTS ==================== -->
-    <!-- App.js yang akan kita buat nanti -->
     <script src="js/app.js"></script>
 </body>
 </html>
